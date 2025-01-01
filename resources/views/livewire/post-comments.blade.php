@@ -29,7 +29,7 @@
                 <!-- Card Bottom Action Buttons -->
                 <div class="flex items-center justify-end mb-2">
                     <button type="submit"
-                        class="mt-2 flex gap-2 text-xs items-center rounded-full px-4 py-2 font-semibold bg-gray-800 hover:bg-black text-white">
+                        class="mt-2 flex gap-2 text-xs items-center rounded-full px-4 py-2 font-semibold bg-sky-600 hover:bg-sky-800 text-white">
                         Comment
                     </button>
                 </div>
@@ -87,7 +87,7 @@
                                 <!-- User Info -->
                                 <div class="text-gray-900 flex flex-col min-w-0 flex-1">
                                     <a href="{{route('profile', $comment->user->username)}}"
-                                        class="hover:underline font-semibold line-clamp-1">
+                                        class="text-sky-800 hover:underline font-semibold line-clamp-1">
                                         {{ $comment->user->full_name }}
                                     </a>
 

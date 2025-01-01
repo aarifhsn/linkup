@@ -1,7 +1,7 @@
 <!-- Barta Card Bottom -->
 <footer class="border-t border-gray-200 pt-2">
     <!-- Card Bottom Action Buttons -->
-    <div class="flex items-center justify-between">
+    <div class="flex items-center gap-8">
         <div class="flex gap-8 text-gray-600">
             <!-- Comment Button -->
             <a href="{{ route('post.show', ['post' => $post, 'id' => $post->id, 'username' => $post->user->username]) }}"
@@ -17,10 +17,15 @@
                 <p>{{ $post->comments()->count() }}</p>
             </a>
             <!-- /Comment Button -->
-
-            <livewire:like-button :key="$post->id" :post="$post" />
-
         </div>
+
+        <livewire:like-button :key="$post->id" :post="$post" />
+
+        <!-- Date Created & View Stat -->
+        <div class="flex ml-auto items-center gap-2 text-gray-500 text-xs my-2">
+            <span class="">{{ $post->created_at->diffForHumans() }}</span>
+        </div>
+        <!-- /Date Created & View Stat -->
     </div>
     <!-- /Card Bottom Action Buttons -->
 </footer>

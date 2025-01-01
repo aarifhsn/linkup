@@ -23,9 +23,9 @@ class PostRequest extends FormRequest
     {
         return [
 
-            'content' => 'nullable|required_without:image|max:255|string',
+            'content' => 'nullable|required_without:image|string|max:2000',
 
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:1024',
 
         ];
     }

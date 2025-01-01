@@ -1,8 +1,9 @@
-<footer class="shadow bg-black mt-10">
+<footer class="shadow bg-sky-900 mt-10">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div class="sm:flex sm:items-center sm:justify-between">
             <a href="https://github.com/alnahian2003" class="flex items-center mb-4 sm:mb-0">
-                <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Barta</span>
+                <span
+                    class="self-center text-2xl font-semibold whitespace-nowrap text-white">{{config('app.name')}}</span>
             </a>
             <ul class="flex flex-wrap items-center mb-6 text-sm font-medium sm:mb-0 text-gray-100">
                 <li>
@@ -22,6 +23,7 @@
 
         <hr class="my-6 sm:mx-auto border-gray-700 lg:my-8" />
         <span class="block text-sm sm:text-center text-gray-200">© 2023
-            <a href="https://github.com/alnahian2003" class="hover:underline">Barta</a>. All Rights Reserved.</span>
+            <a href="https://github.com/alnahian2003" class="hover:underline">{{config('app.name')}}</a>. All Rights
+            Reserved.</span>
     </div>
 </footer>

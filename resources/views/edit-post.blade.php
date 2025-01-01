@@ -59,13 +59,13 @@
                             <input type="file" name="image" id="image"
                                 class=" block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
                                 x-ref="imageInput" @change="if ($event.target.files.length > 0) { 
-                                                                const reader = new FileReader(); 
-                                                                reader.onload = () => { 
-                                                                    imagePreview = reader.result; 
-                                                                    showRemoveButton = true; 
-                                                                }; 
-                                                                reader.readAsDataURL($event.target.files[0]); 
-                                                            }" />
+                                                                        const reader = new FileReader(); 
+                                                                        reader.onload = () => { 
+                                                                            imagePreview = reader.result; 
+                                                                            showRemoveButton = true; 
+                                                                        }; 
+                                                                        reader.readAsDataURL($event.target.files[0]); 
+                                                                    }" />
                         </div>
                         @error('image')
                             <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
@@ -85,7 +85,7 @@
                 Cancel
             </a>
             <button type="submit"
-                class="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+                class="rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
                 Save
             </button>
         </div>

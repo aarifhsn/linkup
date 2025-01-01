@@ -8,6 +8,7 @@ use App\Livewire\HomePage;
 use App\Livewire\Notifications;
 use App\Livewire\ShowPost;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Chat;
 
 Route::get('/', HomePage::class)->name('home');
 
@@ -35,3 +36,5 @@ Route::delete('/question/{id}', [PostController::class, 'destroy'])->middleware(
 Route::middleware('auth')->group(function () {
     Route::get('/notifications', Notifications::class)->name('notifications');
 });
+
+Route::get('/chat/{chatRoomId?}', Chat::class)->middleware('auth');

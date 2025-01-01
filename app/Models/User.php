@@ -58,7 +58,7 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn() => $this->avatar && file_exists(storage_path('app/public/' . $this->avatar))
             ? asset('storage/' . $this->avatar)
-            : 'https://ui-avatars.com/api/?name=' . $this->first_name . '+' . $this->last_name . '&background=random&color=fff'
+            : 'https://ui-avatars.com/api/?name=' . $this->first_name . '+' . $this->last_name . '&background=0284c7&color=fff'
         );
     }
 
@@ -80,5 +80,10 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 }

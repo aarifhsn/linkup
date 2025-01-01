@@ -20,9 +20,9 @@
   <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <a href="{{route('home')}}" class="text-center text-6xl font-bold text-gray-900">
-        <h1>Barta</h1>
+        <h1 class="capitalize text-sky-800">{{config('app.name')}}</h1>
       </a>
-      <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+      <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-sky-950">
         Create a new account
       </h1>
     </div>
@@ -76,7 +76,7 @@
 
         <div>
           <button type="submit"
-            class="flex w-full justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
+            class="flex w-full justify-center rounded-md bg-sky-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-sky-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
             Register
           </button>
         </div>
