@@ -36,3 +36,4 @@ class MessageSent implements ShouldBroadcastNow
         ];
     }
 }
+

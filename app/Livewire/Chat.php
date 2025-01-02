@@ -25,7 +25,12 @@ class Chat extends Component
         $this->chatRoomId = $chatRoomId;
 
         // Load existing messages for the chat room
-        $this->messages = Message::with('user')->where('chat_room_id', $chatRoomId)->get()->toArray();
+        $this->messages = Message::with('user')
+            ->where('chat_room_id', $chatRoomId)
+            ->orWhereNull('chat_room_id')
+            ->latest()
+            ->get()
+            ->toArray();
     }
 
     public function sendMessage()
@@ -42,18 +47,14 @@ class Chat extends Component
 
         $this->newMessage = '';
 
-        // Manually trigger scroll
-        $this->dispatchBrowserEvent('message-added');
+        // Dispatch a browser event to trigger scrolling
+        $this->dispatch('message-sent');
     }
 
     public function render()
     {
         return view('livewire.chat', [
-            'messages' => Message::where('chat_room_id', $this->chatRoomId)
-                ->orWhereNull('chat_room_id')
-                ->with('user')
-                ->latest()
-                ->paginate(50),
+            'messages' => $this->messages,
         ]);
     }
 }

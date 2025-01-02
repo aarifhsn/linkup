@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Services\UserServices;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -28,9 +29,13 @@ class RegisterController extends Controller
     {
         $this->userServices->register($request);
 
+        // fire the registered event
+        event(new Registered(Auth::user()));
+
         // log the user in after registation
         if (Auth::attempt($request->only('email', 'password'))) {
             return redirect()->route('profile', Auth::user()->username)->with('success', 'You have successfully registered and logged in!');
+
         }
 
         return redirect()->route('register')->with('errors', 'Registration Failed, please try again.');
