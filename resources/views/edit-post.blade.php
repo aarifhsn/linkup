@@ -48,7 +48,7 @@
                                 style="display: none; max-width: 100%; height: auto;">
                             <button id="removeImage" type="button"
                                 @click="imagePreview = ''; $refs.imageInput.value = ''; showRemoveButton=false"
-                                class="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2.5 py-1"
+                                class="absolute top-0 right-0 bg-sky-800 text-white rounded-full px-2.5 py-1"
                                 x-show="showRemoveButton">
                                 &times;
                             </button>
@@ -59,13 +59,13 @@
                             <input type="file" name="image" id="image"
                                 class=" block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
                                 x-ref="imageInput" @change="if ($event.target.files.length > 0) { 
-                                                                        const reader = new FileReader(); 
-                                                                        reader.onload = () => { 
-                                                                            imagePreview = reader.result; 
-                                                                            showRemoveButton = true; 
-                                                                        }; 
-                                                                        reader.readAsDataURL($event.target.files[0]); 
-                                                                    }" />
+                                                                            const reader = new FileReader(); 
+                                                                            reader.onload = () => { 
+                                                                                imagePreview = reader.result; 
+                                                                                showRemoveButton = true; 
+                                                                            }; 
+                                                                            reader.readAsDataURL($event.target.files[0]); 
+                                                                        }" />
                         </div>
                         @error('image')
                             <div class="text-red-500 text-sm mt-2">{{ $message }}</div>

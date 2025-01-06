@@ -32,7 +32,7 @@
             <img x-show="imagePreview" x-bind:src="imagePreview" alt="Image Preview"
                 style="display: none; max-width: 100%; height: auto;">
             <button id="removeImage" type="button" @click="imagePreview = ''; $refs.imageInput.value = '';
-                showRemoveButton=false" class="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2.5 py-1"
+                showRemoveButton=false" class="absolute top-0 right-0 bg-sky-800 text-white rounded-full px-3 py-1"
                 x-show="showRemoveButton">
                 &times;
             </button>
