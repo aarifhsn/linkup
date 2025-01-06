@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\WithPagination;
 use App\Events\MessageSent;
 use App\Models\ChatRoom;
+use Illuminate\Support\Facades\Log;
 
 class Chat extends Component
 {
@@ -33,33 +34,62 @@ class Chat extends Component
 
         if ($this->chatRoomId) {
             $this->loadMessagesForChatRoom();
+            $this->listeners = [
+                'echo:chat-room.' . $this->chatRoomId . ',MessageSent' => 'receiveMessage',
+            ];
+        }
+    }
+
+    public function updatedChatRoomId($chatRoomId)
+    {
+        Log::info('updatedChatRoomId called with: ' . $this->chatRoomId);
+        if ($chatRoomId) {
+            Log::info('Chat room updated: ' . $this->chatRoomId);
+            $this->loadMessagesForChatRoom();
+            $this->listeners = [
+                'echo:chat-room.' . $this->chatRoomId . ',MessageSent' => 'receiveMessage',
+            ];
         }
 
-        // Load existing messages for the chat room
-        $this->messages = Message::with('user')
-            ->where('chat_room_id', $chatRoomId)
-            ->orWhereNull('chat_room_id')
-            ->orderBy('created_at', 'asc')
-            ->get()
-            ->toArray();
-
-        // Listen for new messages
-        $this->listeners['echo:chat-room.' . $this->chatRoomId . ',MessageSent'] = 'receiveMessage';
     }
 
     private function loadMessagesForChatRoom()
     {
-        if ($this->chatRoomId) {
-            $chatRoom = ChatRoom::find($this->chatRoomId);
-            $this->currentChatRoomName = $chatRoom?->name;
+
+        $chatRoom = ChatRoom::find($this->chatRoomId);
+        if ($chatRoom) {
+            Log::info('Loading messages for chat room: ' . $this->chatRoomId);
+            $this->currentChatRoomName = $chatRoom->name;
 
             $this->messages = Message::with('user')
                 ->where('chat_room_id', $this->chatRoomId)
                 ->orderBy('created_at', 'asc')
                 ->get()
                 ->toArray();
+        } else {
+            Log::warning('Chat room not found: ' . $this->chatRoomId);
+            $this->messages = [];
+            $this->currentChatRoomName = '';
         }
     }
+
+    public function createChatRoom()
+    {
+        $this->validate([
+            'newChatRoomName' => 'required|string|max:30',
+        ]);
+
+        $chatRoom = ChatRoom::create(['name' => $this->newChatRoomName]);
+
+        // Reload chat rooms and set the new one as selected
+        $this->chatRooms = ChatRoom::all()->toArray();
+        $this->chatRoomId = $chatRoom->id;
+
+        $this->newChatRoomName = '';
+        $this->loadMessagesForChatRoom();
+
+    }
+
 
     public function sendMessage()
     {
@@ -82,59 +112,12 @@ class Chat extends Component
         $this->dispatch('message-sent');
     }
 
-    public function createChatRoom()
-    {
-        $this->validate([
-            'newChatRoomName' => 'required|string|max:30',
-        ]);
-
-        $chatRoom = ChatRoom::create(['name' => $this->newChatRoomName]);
-
-
-        // set the current chat room details
-        $this->chatRoomId = $chatRoom->id;
-        $this->loadMessagesForChatRoom();
-        $this->currentChatRoomName = $chatRoom->name;
-
-        // clear the input field
-        $this->newChatRoomName = '';
-
-        // reload the chat rooms to include the new ones
-        $this->chatRooms = ChatRoom::all()->toArray();
-
-        // Clear the old messages
-        $this->messages = [];
-
-        // Trigger browser event
-        $this->dispatch('room-entered');
-    }
 
     public function receiveMessage($message)
     {
         $this->messages[] = $message;
         $this->dispatch('message-sent');
     }
-
-
-    public function updatedChatRoomId($value)
-    {
-        if ($value) {
-            $this->chatRoomId = $value;
-            $this->loadMessagesForChatRoom();
-            $this->listeners = [
-                'echo:chat-room.' . $value . ',MessageSent' => 'receiveMessage',
-            ];
-            $this->dispatch('room-entered');
-        } else {
-            $this->listeners = [];
-            $this->messages = [];
-            $this->currentChatRoomName = null;
-        }
-    }
-
-
-
-
 
     public function leaveChatRoom()
     {
@@ -143,8 +126,6 @@ class Chat extends Component
 
         $this->messages = [];
     }
-
-
 
     public function render()
     {
