@@ -7,8 +7,6 @@ use Livewire\Attributes\Reactive;
 
 class SearchResults extends Component
 {
-
-    #[Reactive]
     public $results = [];
 
     public function updateResults($results)

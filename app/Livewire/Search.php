@@ -12,10 +12,9 @@ class Search extends Component
     use WithPagination;
 
     public $results = [];
+    protected $queryString = ['searchText'];
     public $username;
     public $id;
-
-    #[Url]
     public $searchText = '';
 
     public function rules()
@@ -37,13 +36,9 @@ class Search extends Component
         $posts = Post::whereIn('user_id', $users)
             ->orWhere('content', 'like', '%' . $value . '%')
             ->with('user') // Eager load user data
-            ->get();
+            ->paginate(10);
 
         $this->results = $posts;
-
-        if (empty($this->searchText)) {
-            $this->results = [];
-        }
     }
 
     public function render()

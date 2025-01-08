@@ -11,7 +11,7 @@
                     </div>
                 </div>
 
-                <livewire:search />
+                <!-- <livewire:search /> -->
 
                 <div class="hidden sm:ml-6 sm:flex gap-2 sm:items-center">
                     <!-- Notification dropdown -->
