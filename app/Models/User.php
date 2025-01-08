@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Filament\Panel;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasName, FilamentUser
 {
     use HasFactory, Notifiable;
 
@@ -24,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'bio',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -87,4 +91,22 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Message::class);
     }
+
+    public function getFilamentName(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function canAccessFilament(): bool
+    {
+        // Example: Restrict access to only admin users
+        return $this->is_admin === true;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // Example: Restrict access to only admin users
+        return $this->is_admin === true;
+    }
+
 }

@@ -7,6 +7,8 @@ use App\Models\Post;
 use App\Models\User;
 use App\Services\PostServices;
 use Illuminate\Support\Facades\Auth;
+use Flasher\Prime\FlasherInterface;
+
 
 class PostController extends Controller
 {
@@ -40,7 +42,9 @@ class PostController extends Controller
     {
         $this->postService->createPost($request);
 
-        return redirect()->route('home')->with('success', 'Post created successfully!');
+        flash()->success('Post created successfully!');
+
+        return redirect()->route('home');
     }
 
     /**
@@ -86,7 +90,9 @@ class PostController extends Controller
         }
         $post->delete();
 
-        return redirect(route('profile', ['username' => Auth::user()->username]))->with('success', 'Post deleted successfully!');
+        flash()->success('Post deleted successfully!');
+
+        return redirect(route('profile', ['username' => Auth::user()->username]));
 
     }
 }
